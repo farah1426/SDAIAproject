@@ -2054,6 +2054,7 @@ html[dir="rtl"] .toast.toast-warning {
     min-width: 48px;
     text-align: center;
     display: inline-block;
+    
 }
 
 /* If removing one stat leaves awkward spacing */
