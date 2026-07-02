@@ -2031,3 +2031,54 @@ html[dir="rtl"] .toast.toast-warning {
     display: block;
     font-weight: 600;
 }
+
+.timeline-list{
+    max-height: 260px;
+    overflow-y: auto;
+    padding-right:8px;
+}
+
+/* Make active cases number clearer */
+#stat-active-cases {
+    color: #ffffff !important;
+    background: #ef4444;
+    padding: 6px 14px;
+    border-radius: 10px;
+    font-size: 24px;
+    font-weight: 900;
+    box-shadow: 0 0 12px rgba(239, 68, 68, 0.7);
+}
+
+/* Improve all ops stat numbers */
+.ops-stat strong {
+    min-width: 48px;
+    text-align: center;
+    display: inline-block;
+}
+
+/* If removing one stat leaves awkward spacing */
+.ops-stats-bar {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+/* Make directed teams number clearer */
+#stat-dispatched-teams {
+    color: #ffffff !important;
+    background: #f97316;
+    padding: 6px 14px;
+    border-radius: 10px;
+    font-size: 24px;
+    font-weight: 900;
+    box-shadow: 0 0 12px rgba(249, 115, 22, 0.7);
+}
+
+/* Make rescued today number clearer */
+#stat-rescued-today {
+    color: #ffffff !important;
+    background: #22c55e;
+    padding: 6px 14px;
+    border-radius: 10px;
+    font-size: 24px;
+    font-weight: 900;
+    box-shadow: 0 0 12px rgba(34, 197, 94, 0.7);
+}

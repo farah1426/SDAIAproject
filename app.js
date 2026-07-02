@@ -2,7 +2,6 @@
    MADAD (مدد) - CORE APPLICATION LOGIC & STATE
    Saudi Smart Rescue Platform JavaScript Engine
    ========================================================================== */
-
 // 1. Mock Database & Application State
 const state = {
     // Current Active Language ('en' or 'ar')
@@ -86,13 +85,11 @@ const state = {
             }
         }
     ],
-
     // Active Trip State (User Dashboard Side)
     activeTrip: null,
     tripTimer: null,
     tripGPSLog: [],
     isSignalLost: false,
-
     // Incidents Database (Rescue command center view)
     incidents: [
         {
@@ -177,7 +174,6 @@ const state = {
             ]
         }
     ],
-
     // Regional Rescue Team hubs (for closest team calculation)
     teams: [
         { name: "Riyadh Desert Patrol Section 2", region: "Riyadh", baseCoords: { lat: 24.7136, lng: 46.6753 } },
@@ -187,7 +183,6 @@ const state = {
         { name: "Hail Desert Rescue division", region: "Nafud", baseCoords: { lat: 27.5114, lng: 41.7208 } },
         { name: "Makkah Wadi Operations hub", region: "Makkah", baseCoords: { lat: 21.3891, lng: 39.8579 } }
     ],
-
     // Officers directory for dispatch dropdown
     officers: [
         "Capt. Bandar Al-Harbi",
@@ -196,20 +191,17 @@ const state = {
         "Capt. Faisal bin Turki",
         "Lt. Sultan Al-Shammari"
     ],
-
     // Active Selected Incident ID in Ops Dashboard
     selectedIncidentId: null,
     
     // UI Filtering mode for Incidents ('ALL', 'CRITICAL', 'HIGH', 'MEDIUM')
     opsFilter: 'ALL'
 };
-
 // Leaflet Map State variables
 let mapInstance = null;
 let mapMarkersGroup = null;
 let predictiveCirclesGroup = null;
 let searchVectorLine = null;
-
 // ==========================================================================
 // 2. CORE TRANSLATION ENGINE (BILINGUAL SUPPORT)
 // ==========================================================================
@@ -248,7 +240,6 @@ function toggleLanguage() {
         "info"
     );
 }
-
 function applyTranslations() {
     const elements = document.querySelectorAll('[data-en]');
     elements.forEach(el => {
@@ -262,7 +253,6 @@ function applyTranslations() {
             }
         }
     });
-
     // Handle inputs placeholders separately if custom attributes exist
     const placeholders = document.querySelectorAll('[data-en-placeholder]');
     placeholders.forEach(el => {
@@ -270,7 +260,6 @@ function applyTranslations() {
         if (ph) el.placeholder = ph;
     });
 }
-
 // ==========================================================================
 // 3. TOAST NOTIFICATION UTILITY
 // ==========================================================================
@@ -293,7 +282,6 @@ function showToast(message, type = "success") {
         setTimeout(() => toast.remove(), 300);
     }, 4000);
 }
-
 // ==========================================================================
 // 4. ROUTING / VIEW SWITCHING
 // ==========================================================================
@@ -321,14 +309,12 @@ function switchView(viewName) {
             return;
         }
     }
-
     // Clear active classes from nav buttons
     const navButtons = ['btn-nav-login', 'btn-nav-register', 'btn-nav-user', 'btn-nav-ops'];
     navButtons.forEach(id => {
         const btn = document.getElementById(id);
         if (btn) btn.classList.remove('active');
     });
-
     // Highlight the active navigation button
     if (viewName === 'landing') {
         const regBox = document.getElementById('auth-register-box');
@@ -343,17 +329,14 @@ function switchView(viewName) {
         const activeBtn = document.getElementById('btn-nav-ops');
         if (activeBtn) activeBtn.classList.add('active');
     }
-
     // Toggle page views visibility
     document.querySelectorAll('.app-page').forEach(page => {
         page.classList.remove('active');
     });
-
     const targetPage = document.getElementById(`page-${viewName}`);
     if (targetPage) {
         targetPage.classList.add('active');
     }
-
     // Secondary setup triggers
     if (viewName === 'ops-dash') {
         initRescueMap();
@@ -362,11 +345,9 @@ function switchView(viewName) {
         syncUserHUD();
         renderUserHistory();
     }
-
     // Dynamic navbar state sync
     updateNavbar();
 }
-
 function updateNavbar() {
     const btnLogin = document.getElementById('btn-nav-login');
     const btnRegister = document.getElementById('btn-nav-register');
@@ -374,12 +355,10 @@ function updateNavbar() {
     const btnOps = document.getElementById('btn-nav-ops');
     const navGreeting = document.getElementById('nav-user-greeting');
     const btnLogout = document.getElementById('btn-nav-logout');
-
     if (state.currentUser) {
         if (btnLogin) btnLogin.style.display = 'none';
         if (btnRegister) btnRegister.style.display = 'none';
         if (btnLogout) btnLogout.style.display = 'block';
-
         if (state.currentUser.role === 'officer') {
             if (btnUser) btnUser.style.display = 'none';
             if (btnOps) btnOps.style.display = 'block';
@@ -387,7 +366,6 @@ function updateNavbar() {
             if (btnUser) btnUser.style.display = 'block';
             if (btnOps) btnOps.style.display = 'none';
         }
-
         if (navGreeting) {
             navGreeting.style.display = 'inline-block';
             const welcomeText = state.lang === 'en' ? `Welcome, ${state.currentUser.name}` : `مرحباً، ${state.currentUser.name}`;
@@ -405,7 +383,6 @@ function updateNavbar() {
         }
     }
 }
-
 // ==========================================================================
 // 5. AUTHENTICATION CONTROLLERS
 // ==========================================================================
@@ -415,7 +392,6 @@ function toggleAuthTab(tab) {
     
     // Clear validation errors when switching tabs
     clearErrors();
-
     if (tab === 'login') {
         document.getElementById('tab-login').classList.add('active');
         document.getElementById('auth-login-box').classList.add('active');
@@ -436,7 +412,6 @@ function toggleAuthTab(tab) {
         if (btnRegister) btnRegister.classList.add('active');
     }
 }
-
 function clearErrors() {
     document.querySelectorAll('.validation-error').forEach(el => {
         el.textContent = '';
@@ -446,7 +421,6 @@ function clearErrors() {
         el.classList.remove('input-error-border');
     });
 }
-
 function showError(fieldId, errorId, message) {
     const field = document.getElementById(fieldId);
     const errSpan = document.getElementById(errorId);
@@ -458,14 +432,12 @@ function showError(fieldId, errorId, message) {
         errSpan.style.display = 'block';
     }
 }
-
 function validateLogin() {
     clearErrors();
     let isValid = true;
     
     const userVal = document.getElementById('login-username').value.trim();
     const passVal = document.getElementById('login-password').value;
-
     if (!userVal) {
         showError('login-username', 'err-login-username', 'اسم المستخدم مطلوب');
         isValid = false;
@@ -474,14 +446,11 @@ function validateLogin() {
         showError('login-password', 'err-login-password', 'كلمة المرور مطلوبة');
         isValid = false;
     }
-
     return isValid;
 }
-
 function validateRegister() {
     clearErrors();
     let isValid = true;
-
     const role = document.getElementById('reg-role').value;
     const username = document.getElementById('reg-username').value.trim();
     const pass = document.getElementById('reg-password').value;
@@ -491,7 +460,6 @@ function validateRegister() {
     const bloodType = document.getElementById('reg-blood').value;
     const medical = document.getElementById('reg-medical').value.trim();
     const allergies = document.getElementById('reg-allergies').value.trim();
-
     if (!role) {
         showError('reg-role', 'err-reg-role', 'نوع الحساب مطلوب');
         isValid = false;
@@ -529,18 +497,8 @@ function validateRegister() {
         showError('reg-blood', 'err-reg-blood', 'فصيلة الدم مطلوبة');
         isValid = false;
     }
-    if (!medical) {
-        showError('reg-medical', 'err-reg-medical', 'الحالات الطبية المزمنة مطلوبة');
-        isValid = false;
-    }
-    if (!allergies) {
-        showError('reg-allergies', 'err-reg-allergies', 'الحساسية مطلوبة');
-        isValid = false;
-    }
-
     return isValid;
 }
-
 function handleLogin(event) {
     event.preventDefault();
     if (!validateLogin()) {
@@ -549,10 +507,8 @@ function handleLogin(event) {
     
     const userVal = document.getElementById('login-username').value.trim().toLowerCase();
     const passVal = document.getElementById('login-password').value;
-
     loginUser(userVal, passVal);
 }
-
 function loginUser(username, password) {
     // 1. Civil Defense Officer Bypass
     if (username === 'officer') {
@@ -566,7 +522,6 @@ function loginUser(username, password) {
         };
         state.currentUser = officerUser;
         localStorage.setItem('madad_user', JSON.stringify(officerUser));
-
         showToast(
             state.lang === 'en' ? "Officer single sign-on authenticated." : "تم التحقق من الدخول الموحد لغرفة العمليات.",
             "success"
@@ -574,7 +529,6 @@ function loginUser(username, password) {
         switchView('ops-dash');
         return;
     }
-
     // 2. Normal user authentication match
     const matchedUser = state.users.find(u => u.username === username || u.nationalId === username);
     
@@ -583,10 +537,8 @@ function loginUser(username, password) {
             showError('login-password', 'err-login-password', 'كلمة المرور غير صحيحة');
             return;
         }
-
         state.currentUser = matchedUser;
         localStorage.setItem('madad_user', JSON.stringify(matchedUser));
-
         showToast(
             state.lang === 'en' ? `Welcome back, ${matchedUser.name}` : `مرحباً بك مجدداً، ${matchedUser.name}`,
             "success"
@@ -605,7 +557,6 @@ function loginUser(username, password) {
         showError('login-username', 'err-login-username', 'اسم المستخدم أو رقم الهوية غير مسجل');
     }
 }
-
 function handleRegister(event) {
     event.preventDefault();
     if (!validateRegister()) {
@@ -619,17 +570,15 @@ function handleRegister(event) {
     const phone = document.getElementById('reg-phone').value.trim();
     const emergencyContact = document.getElementById('reg-emergency-contact').value.trim();
     const bloodType = document.getElementById('reg-blood').value;
-    const medicalConditions = document.getElementById('reg-medical').value.trim();
-    const allergies = document.getElementById('reg-allergies').value.trim();
+    const medicalConditions = document.getElementById('reg-medical').value.trim() || "None";
+    const allergies = document.getElementById('reg-allergies').value.trim() || "None";
     const vehicleType = document.getElementById('reg-vehicle-type').value.trim() || "N/A";
     const vehiclePlate = document.getElementById('reg-vehicle-plate').value.trim() || "N/A";
-
     const exists = state.users.some(u => u.username === username.toLowerCase().replace(/\s+/g, '') || u.nationalId === nationalId);
     if (exists) {
         showToast(state.lang === 'en' ? "Username or National ID already registered" : "اسم المستخدم أو رقم الهوية مسجل مسبقاً", "error");
         return;
     }
-
     const newUser = {
         username: username.toLowerCase().replace(/\s+/g, ''),
         password: pass,
@@ -644,10 +593,8 @@ function handleRegister(event) {
         vehicleType,
         vehiclePlate
     };
-
     state.users.push(newUser);
     localStorage.setItem('madad_users', JSON.stringify(state.users));
-
     state.currentUser = newUser;
     localStorage.setItem('madad_user', JSON.stringify(newUser));
     
@@ -658,18 +605,15 @@ function handleRegister(event) {
         state.lang === 'en' ? "Registration successful! Profile synchronized." : "تم التسجيل بنجاح! مزامنة الهوية الرقمية.",
         "success"
     );
-
     if (role === 'officer') {
         switchView('ops-dash');
     } else {
         switchView('user-dash');
     }
 }
-
 function handleLogout() {
     state.currentUser = null;
     localStorage.removeItem('madad_user');
-
     if (state.tripTimer) {
         clearInterval(state.tripTimer);
         state.tripTimer = null;
@@ -684,7 +628,6 @@ function handleLogout() {
     );
     switchView('landing');
 }
-
 // ==========================================================================
 // 6. USER PANEL SWITCH CONTROLLER
 // ==========================================================================
@@ -699,38 +642,32 @@ function openUserPanel(panelId) {
         targetPanel.classList.add('active');
     }
 }
-
 function closeUserPanel() {
     document.querySelectorAll('.user-panel').forEach(panel => {
         panel.classList.remove('active');
     });
     document.getElementById('panel-default').classList.add('active');
 }
-
 // ==========================================================================
 // 7. USER TRIP SIMULATOR & GPS LOGGING
 // ==========================================================================
 function startTripSimulation(event) {
     event.preventDefault();
-
     const destination = document.getElementById('trip-destination').value.trim();
     const returnTime = document.getElementById('trip-return-time').value;
     const transport = document.getElementById('trip-transport').value;
     const companions = parseInt(document.getElementById('trip-companions').value) || 0;
     const plate = document.getElementById('trip-plate').value.trim() || "N/A";
     const region = document.getElementById('trip-region').value;
-
     // Define coordinate start anchors in Saudi Arabia based on region
     let startLat = 24.7136;
     let startLng = 46.6753; // Default Riyadh center
-
     if (region === 'Riyadh') { startLat = 24.8912; startLng = 46.8385; } // Thumamah desert region
     else if (region === 'Makkah') { startLat = 21.4391; startLng = 39.8179; } // Wadi regions
     else if (region === 'Eastern') { startLat = 25.4124; startLng = 49.6201; } // Al-Ahsa sand borders
     else if (region === 'Asir') { startLat = 18.2312; startLng = 42.4842; } // Mountain sector
     else if (region === 'Tabuk') { startLat = 28.5201; startLng = 35.1204; } // Mountain/desert coast
     else if (region === 'Nafud') { startLat = 27.5211; startLng = 41.7208; } // Hail desert dunes
-
     // Create Active Trip state structure
     state.activeTrip = {
         destination,
@@ -749,10 +686,8 @@ function startTripSimulation(event) {
         startTime: new Date(),
         isCriticalSOS: false
     };
-
     state.tripGPSLog = [];
     state.isSignalLost = false;
-
     // Reset simulator visual elements
     document.getElementById('form-safe-trip').classList.add('hidden');
     document.getElementById('user-trip-hud').classList.remove('hidden');
@@ -761,36 +696,28 @@ function startTripSimulation(event) {
     const signalLabel = document.getElementById('signal-label');
     signalLabel.className = "signal-label-text col-green";
     signalLabel.textContent = state.lang === 'en' ? "Connected (Online)" : "متصل (أونلاين)";
-
     document.getElementById('gps-log-table').querySelector('tbody').innerHTML = '';
-
     // Clear any previous timer loop
     if (state.tripTimer) clearInterval(state.tripTimer);
     
     // Start Simulation Loop (Triggers every 3 seconds)
     state.tripTimer = setInterval(simulateGPSProgress, 3000);
-
     showToast(
         state.lang === 'en' ? "Trip initiated. Local GPS syncing active." : "تم تفعيل الرحلة ومسار الملاحة النشط.",
         "success"
     );
-
     simulateGPSProgress(); // run first tick immediately
 }
-
 function simulateGPSProgress() {
     if (!state.activeTrip) return;
-
     // 1. Simulating movement trigonometry
     // Convert heading from degrees to radians.
     // Coordinates step calculations: 1 degree latitude ~ 111km.
     const speedKms = state.activeTrip.speed / 3600 * 3; // speed distance in 3 seconds tick
     const latDelta = (speedKms * Math.cos(state.activeTrip.heading * Math.PI / 180)) / 111;
     const lngDelta = (speedKms * Math.sin(state.activeTrip.heading * Math.PI / 180)) / (111 * Math.cos(state.activeTrip.currentLat * Math.PI / 180));
-
     state.activeTrip.currentLat += latDelta;
     state.activeTrip.currentLng += lngDelta;
-
     // 2. Fluctuations to battery, speed, and heading
     state.activeTrip.battery = Math.max(0, state.activeTrip.battery - (Math.random() > 0.7 ? 1 : 0));
     state.activeTrip.heading = (state.activeTrip.heading + (Math.floor(Math.random() * 15) - 7) + 360) % 360;
@@ -800,7 +727,6 @@ function simulateGPSProgress() {
     } else {
         state.activeTrip.speed = Math.max(15, state.activeTrip.speed + (Math.floor(Math.random() * 10) - 5));
     }
-
     // 3. Capture breadcrumb coordinate record
     const timestamp = new Date();
     const breadcrumb = {
@@ -811,21 +737,17 @@ function simulateGPSProgress() {
         heading: state.activeTrip.heading,
         battery: state.activeTrip.battery
     };
-
     // Store in device local cache list
     state.tripGPSLog.unshift(breadcrumb); // insert at front to see newest records in UI table
-
     // Update simulation HUD layout fields
     document.getElementById('hud-speed').textContent = `${breadcrumb.speed} km/h`;
     document.getElementById('hud-heading').textContent = `N ${breadcrumb.heading}°`;
     document.getElementById('hud-battery').textContent = `${breadcrumb.battery}%`;
-
     const timerDiff = Math.floor((Date.now() - state.activeTrip.startTime.getTime()) / 1000);
     const hrs = String(Math.floor(timerDiff / 3600)).padStart(2, '0');
     const mins = String(Math.floor((timerDiff % 3600) / 60)).padStart(2, '0');
     const secs = String(timerDiff % 60).padStart(2, '0');
     document.getElementById('hud-timer-val').textContent = `${hrs}:${mins}:${secs}`;
-
     // Update local table layout
     const tbody = document.getElementById('gps-log-table').querySelector('tbody');
     const row = document.createElement('tr');
@@ -836,12 +758,10 @@ function simulateGPSProgress() {
         <td>${breadcrumb.battery}%</td>
     `;
     tbody.insertBefore(row, tbody.firstChild);
-
     // Keep table records clean
     if (tbody.children.length > 20) {
         tbody.removeChild(tbody.lastChild);
     }
-
     // 4. SYNC WITH BACKEND SERVER IF SIGNAL CONNECTED
     if (!state.isSignalLost) {
         // Upload coordinates to database server registry
@@ -859,12 +779,10 @@ function simulateGPSProgress() {
         }
     }
 }
-
 function toggleSignalLoss(checkbox) {
     state.isSignalLost = checkbox.checked;
     const label = document.getElementById('signal-label');
     const statusVal = document.getElementById('hud-link-status');
-
     if (state.isSignalLost) {
         label.className = "signal-label-text col-red-text";
         label.textContent = state.lang === 'en' ? "Disconnected (Offline)" : "منقطع (أوفلاين)";
@@ -889,13 +807,11 @@ function toggleSignalLoss(checkbox) {
         );
     }
 }
-
 function endTripSimulation() {
     if (state.tripTimer) {
         clearInterval(state.tripTimer);
         state.tripTimer = null;
     }
-
     if (state.activeTrip && state.currentUser) {
         // Save current trip to history array
         const pastTrip = {
@@ -910,16 +826,13 @@ function endTripSimulation() {
         if (!state.currentUser.history) state.currentUser.history = [];
         state.currentUser.history.unshift(pastTrip);
     }
-
     state.activeTrip = null;
     state.tripGPSLog = [];
     state.isSignalLost = false;
-
     // Reset views
     document.getElementById('user-trip-hud').classList.add('hidden');
     document.getElementById('form-safe-trip').classList.remove('hidden');
     document.getElementById('form-safe-trip').reset();
-
     showToast(
         state.lang === 'en' ? "Trip terminated. Status marked SAFE." : "تم إنهاء الرحلة بسلام وحفظ السجل.",
         "success"
@@ -927,7 +840,6 @@ function endTripSimulation() {
     
     renderUserHistory();
 }
-
 // ==========================================================================
 // 8. SOS ALERTS DISPATCH FLOW (USER SIDE)
 // ==========================================================================
@@ -939,7 +851,6 @@ function triggerHudSOS() {
         document.getElementById('sos-notes').value = `Active simulation SOS: Destination ${state.activeTrip.destination}. Transport ${state.activeTrip.transport}. Signal state: ${state.isSignalLost ? 'OFFLINE' : 'ONLINE'}.`;
     }
 }
-
 function sendSOSAlert() {
     if (!state.currentUser) {
         showToast(
@@ -948,7 +859,6 @@ function sendSOSAlert() {
         );
         return;
     }
-
     const sosType = document.getElementById('sos-type').value;
     const sosNotes = document.getElementById('sos-notes').value.trim() || "No notes provided.";
     
@@ -959,7 +869,6 @@ function sendSOSAlert() {
     let speed = 0;
     let heading = 0;
     let region = "Riyadh";
-
     // 1. Gather coordinates from active trip or default user profile sync
     if (state.activeTrip) {
         // If simulated signal was lost, the server only has the LAST SYNCED coordinates in database.
@@ -978,9 +887,7 @@ function sendSOSAlert() {
         heading = state.currentUser.lastSyncedTrip.heading;
         region = state.currentUser.lastSyncedTrip.region;
     }
-
     const newCaseId = `2026-CD-${Math.floor(1000 + Math.random() * 9000)}`;
-
     // Build emergency incident object
     const newIncident = {
         id: newCaseId,
@@ -1008,26 +915,20 @@ function sendSOSAlert() {
             { time: new Date().toLocaleTimeString().substring(0, 5), event_en: "Emergency SOS Broadcast activated.", event_ar: "تم تنشيط نداء الاستغاثة المفتوح." }
         ]
     };
-
     // Calculate AI priority index
     newIncident.priorityScore = calculateAIPriority(newIncident);
-
     // Save into operations list
     state.incidents.unshift(newIncident);
-
     // Display SOS status tracker HUD
     document.getElementById('sos-case-number').textContent = `CASE #${newCaseId}`;
     document.getElementById('sos-status-hud').classList.remove('hidden');
-
     // Trigger visual step state reset
     const stepRep = document.getElementById('step-reported');
     const stepDisp = document.getElementById('step-dispatched');
     const stepRes = document.getElementById('step-rescued');
-
     stepRep.className = "step completed";
     stepDisp.className = "step";
     stepRes.className = "step";
-
     document.getElementById('sos-feedback-msg-text').innerHTML = `
         <span data-en="SOS Sent. Operations command calculates your location using last synced coordinates. Civil Defense dispatch is mobilizing."
               data-ar="تم إرسال الاستغاثة. تقوم غرفة العمليات بحساب موقعك التقديري بناء على آخر إحداثية. يجري إعداد فرقة الإنقاذ.">
@@ -1035,13 +936,11 @@ function sendSOSAlert() {
         </span>
     `;
     applyTranslations();
-
     showToast(
         state.lang === 'en' ? "🚨 SOS Broadcast Active! Coordinates synced with command center." 
                            : "🚨 تم إطلاق الاستغاثة الطارئة بنجاح ومزامنة إحداثياتك.",
         "error"
     );
-
     // Trigger user history update
     if (!state.currentUser.history) state.currentUser.history = [];
     state.currentUser.history.unshift({
@@ -1053,7 +952,6 @@ function sendSOSAlert() {
         details: `${sosType}`
     });
     renderUserHistory();
-
     // Auto-advance simulation after 8 seconds (to dispatch team automatically for demonstration)
     setTimeout(() => {
         const incident = state.incidents.find(i => i.id === newCaseId);
@@ -1067,7 +965,6 @@ function sendSOSAlert() {
                 event_en: "Civil defense rescue helicopter dispatched.",
                 event_ar: "انطلاق مروحية الدفاع المدني للإنقاذ."
             });
-
             // Update user HUD if still on SOS page
             if (document.getElementById('panel-sos').classList.contains('active')) {
                 stepDisp.className = "step completed dispatched";
@@ -1087,7 +984,6 @@ function sendSOSAlert() {
         }
     }, 12000);
 }
-
 // ==========================================================================
 // 9. MISSING PERSON REGISTRY REGISTRATION & LOOKUP
 // ==========================================================================
@@ -1102,15 +998,12 @@ function lookupMissingPerson() {
         );
         return;
     }
-
     const matchedUser = state.users.find(u => u.nationalId === lookupId);
     const profileCard = document.getElementById('missing-profile-card');
     const failCard = document.getElementById('missing-lookup-fail');
-
     if (matchedUser && matchedUser.lastSyncedTrip) {
         failCard.classList.add('hidden');
         profileCard.classList.remove('hidden');
-
         // Populate match details
         document.getElementById('m-found-name').textContent = matchedUser.name;
         document.getElementById('m-found-phone').textContent = matchedUser.phone;
@@ -1121,7 +1014,6 @@ function lookupMissingPerson() {
         // Calculate dynamic relative hours ago string
         const diffHrs = Math.max(1, Math.round((Date.now() - matchedUser.lastSyncedTrip.timestamp.getTime()) / (60 * 60 * 1000)));
         document.getElementById('m-found-time').textContent = state.lang === 'en' ? `${diffHrs} hours ago` : `قبل ${diffHrs} ساعة`;
-
         showToast(
             state.lang === 'en' ? "✓ Latest coordinates retrieved from platform registry." 
                                : "✓ تم العثور على إحداثيات المشترك بنجاح.",
@@ -1137,17 +1029,14 @@ function lookupMissingPerson() {
         );
     }
 }
-
 function handleMissingReport(event) {
     event.preventDefault();
     
     const lookupId = document.getElementById('missing-id').value.trim();
     const relation = document.getElementById('missing-relation').value;
     const notes = document.getElementById('missing-notes').value.trim();
-
     // Check if profile was found
     const matchedUser = state.users.find(u => u.nationalId === lookupId);
-
     let lat = 24.7136;
     let lng = 46.6753; // default center Fallback
     let name = `Missing Citizen (ID: ${lookupId})`;
@@ -1158,7 +1047,6 @@ function handleMissingReport(event) {
     let speed = 0;
     let heading = 0;
     let region = "Riyadh";
-
     if (matchedUser && matchedUser.lastSyncedTrip) {
         name = matchedUser.name;
         phone = matchedUser.phone;
@@ -1171,9 +1059,7 @@ function handleMissingReport(event) {
         heading = matchedUser.lastSyncedTrip.heading;
         region = matchedUser.lastSyncedTrip.region;
     }
-
     const newCaseId = `2026-CD-${Math.floor(1000 + Math.random() * 9000)}`;
-
     const newIncident = {
         id: newCaseId,
         name: name,
@@ -1201,16 +1087,13 @@ function handleMissingReport(event) {
             { time: new Date().toLocaleTimeString().substring(0, 5), event_en: "AI Search polygons generated using latest telemetry sync.", event_ar: "نظام تحديد النطاق التنبؤي يرسم نطاق البحث الأرجح." }
         ]
     };
-
     newIncident.priorityScore = calculateAIPriority(newIncident);
     state.incidents.unshift(newIncident);
-
     showToast(
         state.lang === 'en' ? "✓ Missing person rescue dispatch logged. Civil Defense command notified." 
                            : "✓ تم تقديم بلاغ الإنقاذ بنجاح وجارٍ التقييم في العمليات.",
         "success"
     );
-
     // Reset Form & HUD
     document.getElementById('form-missing-person').reset();
     document.getElementById('missing-profile-card').classList.add('hidden');
@@ -1218,20 +1101,17 @@ function handleMissingReport(event) {
     
     closeUserPanel();
 }
-
 // ==========================================================================
 // 10. AI PRIORITY SCORE ENGINE
 // ==========================================================================
 function calculateAIPriority(incident) {
     let score = 20; // Base baseline score
-
     // 1. Critical low battery scoring (+25 points)
     if (incident.battery <= 15) {
         score += 25;
     } else if (incident.battery <= 50) {
         score += 12;
     }
-
     // 2. Time passed since last sync telemetry check (+20 points)
     const elapsedHrs = (Date.now() - new Date(incident.lastUpdate).getTime()) / (60 * 60 * 1000);
     if (elapsedHrs >= 4) {
@@ -1239,28 +1119,23 @@ function calculateAIPriority(incident) {
     } else if (elapsedHrs >= 1.5) {
         score += 10;
     }
-
     // 3. Chronic illness hazard weighting (+15 points)
     if (incident.medicalInfo && incident.medicalInfo.toLowerCase() !== 'none' && incident.medicalInfo.toLowerCase() !== 'unknown') {
         score += 15;
     }
-
     // 4. Region or scenario hazard (Flash flood wadis or extreme heat) (+20 points)
     if (incident.emergencyType.includes('Flood') || incident.emergencyType.includes('Dehydration')) {
         score += 20;
     } else if (incident.emergencyType.includes('Mountain')) {
         score += 10;
     }
-
     // 5. Age vulnerability mock check (derived from National ID birth century markers - optional demo weighting)
     // If national ID indicates older citizen (e.g. starting with 10... first few numbers)
     if (incident.nationalId.startsWith("102") || incident.nationalId.startsWith("101")) {
         score += 8; // senior citizen bump
     }
-
     return Math.min(100, score);
 }
-
 // ==========================================================================
 // 11. USER HISTORY RENDERING
 // ==========================================================================
@@ -1271,7 +1146,6 @@ function renderUserHistory() {
         listContainer.innerHTML = `<p class="text-center font-size-12 color-muted">No records available</p>`;
         return;
     }
-
     // Insert fallback mock histories if empty
     if (!state.currentUser.history) {
         state.currentUser.history = [
@@ -1279,7 +1153,6 @@ function renderUserHistory() {
             { id: "TRIP-1294", destination: "Wadi Hanifah Valleys", region: "Riyadh", status: "SAFE", date: "2026-05-12", details: "Hiking • 0 Companions" }
         ];
     }
-
     listContainer.innerHTML = '';
     
     state.currentUser.history.forEach(item => {
@@ -1294,7 +1167,6 @@ function renderUserHistory() {
         } else {
             statusBadge = `<span class="badge-status closed" data-en="Closed" data-ar="مغلقة">Closed</span>`;
         }
-
         card.innerHTML = `
             <div class="history-card-header">
                 <strong>${item.destination}</strong>
@@ -1311,21 +1183,18 @@ function renderUserHistory() {
     });
     applyTranslations();
 }
-
 function syncUserHUD() {
     if (state.currentUser) {
         document.getElementById('user-display-name').textContent = state.currentUser.name;
         document.getElementById('user-display-id').textContent = `ID: ${state.currentUser.nationalId}`;
     }
 }
-
 // ==========================================================================
 // 12. SURVIVAL GUIDE CATEGORY SWITCHER
 // ==========================================================================
 function switchGuide(category) {
     document.querySelectorAll('.guide-tab-btn').forEach(btn => btn.classList.remove('active'));
     document.querySelectorAll('.guide-content-box').forEach(box => box.classList.remove('active'));
-
     // Highlight selected button
     event.target.classList.add('active');
     
@@ -1334,7 +1203,6 @@ function switchGuide(category) {
         targetBox.classList.add('active');
     }
 }
-
 function downloadMapSector(btn) {
     btn.disabled = true;
     btn.textContent = state.lang === 'en' ? "Downloading..." : "يجري الحفظ...";
@@ -1349,11 +1217,9 @@ function downloadMapSector(btn) {
         );
     }, 2000);
 }
-
 // ==========================================================================
 // 13. RESCUE OPERATIONS DASHBOARD CODE (DARK COMMAND CENTER)
 // ==========================================================================
-
 function filterIncidents(level) {
     state.opsFilter = level;
     
@@ -1364,14 +1230,11 @@ function filterIncidents(level) {
     else if (level === 'CRITICAL') document.getElementById('filter-critical').classList.add('active');
     else if (level === 'HIGH') document.getElementById('filter-high').classList.add('active');
     else if (level === 'MEDIUM') document.getElementById('filter-medium').classList.add('active');
-
     renderIncidentsList();
 }
-
 function renderIncidentsList() {
     const listContainer = document.getElementById('incident-list-container');
     listContainer.innerHTML = '';
-
     // Filter logic
     const filtered = state.incidents.filter(inc => {
         if (state.opsFilter === 'ALL') return true;
@@ -1380,17 +1243,14 @@ function renderIncidentsList() {
         if (state.opsFilter === 'MEDIUM') return inc.priorityScore >= 30 && inc.priorityScore < 50;
         return true;
     });
-
     // Update active stats totals dynamically
     document.getElementById('stat-active-cases').textContent = state.incidents.filter(i => i.status !== 'CLOSED' && i.status !== 'RESCUED').length;
     document.getElementById('stat-dispatched-teams').textContent = state.incidents.filter(i => i.status === 'DISPATCHED').length;
     document.getElementById('stat-rescued-today').textContent = state.incidents.filter(i => i.status === 'RESCUED').length + 8; // base mock + 8
-
     if (filtered.length === 0) {
         listContainer.innerHTML = `<p class="text-center font-size-11 padding-top color-muted" style="padding: 20px;">No incidents matching filter</p>`;
         return;
     }
-
     filtered.forEach(inc => {
         const card = document.createElement('div');
         
@@ -1407,12 +1267,9 @@ function renderIncidentsList() {
             priorityClass = 'p-medium';
             priorityText = state.lang === 'en' ? 'Medium' : 'متوسطة';
         }
-
         const activeClass = state.selectedIncidentId === inc.id ? 'active' : '';
-
         card.className = `incident-card ${priorityClass} ${activeClass}`;
         card.onclick = () => selectIncident(inc.id);
-
         // Simple relative hours elapsed computation
         const elapsedHrs = (Date.now() - new Date(inc.lastUpdate).getTime()) / (60 * 60 * 1000);
         let timeStr = '';
@@ -1422,7 +1279,6 @@ function renderIncidentsList() {
         } else {
             timeStr = state.lang === 'en' ? `${Math.round(elapsedHrs)}h ago` : `قبل ${Math.round(elapsedHrs)} س`;
         }
-
         // Translate status tag
         let statusText = inc.status;
         if (state.lang === 'ar') {
@@ -1432,7 +1288,6 @@ function renderIncidentsList() {
             else if (inc.status === 'RESCUED') statusText = 'تم الإنقاذ';
             else if (inc.status === 'CLOSED') statusText = 'مغلق';
         }
-
         card.innerHTML = `
             <div class="card-top">
                 <span class="case-id">CASE #${inc.id}</span>
@@ -1450,11 +1305,9 @@ function renderIncidentsList() {
         `;
         listContainer.appendChild(card);
     });
-
     // Update map markers when incidents list renders
     updateMapMarkers();
 }
-
 function selectIncident(id) {
     state.selectedIncidentId = id;
     
@@ -1467,7 +1320,6 @@ function selectIncident(id) {
     renderIncidentDetails();
     focusMapOnIncident(id);
 }
-
 function renderIncidentDetails() {
     const detailPanel = document.getElementById('ops-incident-detail-panel');
     
@@ -1482,21 +1334,17 @@ function renderIncidentDetails() {
         applyTranslations();
         return;
     }
-
     const inc = state.incidents.find(i => i.id === state.selectedIncidentId);
     if (!inc) return;
-
     // AI score badge color class helper
     let scoreColorClass = 'h-low';
     if (inc.priorityScore >= 75) scoreColorClass = ''; // critical red default
     else if (inc.priorityScore >= 50) scoreColorClass = 'h-high';
     else if (inc.priorityScore >= 30) scoreColorClass = 'h-medium';
     else scoreColorClass = 'h-low';
-
     // Calculate dynamic offline elapsed hours
     const elapsedHrs = (Date.now() - new Date(inc.lastUpdate).getTime()) / (60 * 60 * 1000);
     const hrsVal = elapsedHrs.toFixed(1);
-
     // Compute estimated predictive search coordinates values
     // Search Radius calculations: (Terrain Coefficient * speed * time)
     const estRadiusKms = (inc.speed > 0) ? (inc.terrainCoefficient * inc.speed * elapsedHrs).toFixed(1) : (inc.terrainCoefficient * 5 * elapsedHrs).toFixed(1); // fallback 5km/h walking uncertainty
@@ -1513,7 +1361,6 @@ function renderIncidentDetails() {
         else if (inc.heading >= 247 && inc.heading < 292) headingText = state.lang === 'en' ? "West (W)" : "الغرب";
         else if (inc.heading >= 292 && inc.heading < 337) headingText = state.lang === 'en' ? "North-West (NW)" : "الشمال الغربي";
     }
-
     // Build timeline items list HTML
     let timelineHTML = '';
     inc.timeline.forEach(t => {
@@ -1528,17 +1375,14 @@ function renderIncidentDetails() {
             </div>
         `;
     });
-
     // Nearest team dynamic selection logic
     const matchedTeams = state.teams.filter(t => t.region === inc.region);
     const recommendedTeam = matchedTeams.length > 0 ? matchedTeams[0].name : "Riyadh Central Operations Team";
-
     // Setup Officers select dropdown
     let officerOptions = `<option value="" disabled selected>${state.lang === 'en' ? 'Select Commander' : 'اختر القائد الميداني'}</option>`;
     state.officers.forEach(off => {
         officerOptions += `<option value="${off}" ${inc.assignedOfficer === off ? 'selected' : ''}>${off}</option>`;
     });
-
     // Translate UI variables inside detail panel
     const l_case = state.lang === 'en' ? 'CASE PROFILE' : 'ملف الحالة الطارئة';
     const l_citizen = state.lang === 'en' ? 'Citizen Details' : 'بيانات المواطن';
@@ -1556,11 +1400,9 @@ function renderIncidentDetails() {
     const l_last_speed = state.lang === 'en' ? 'Last Known Speed:' : 'السرعة الأخيرة:';
     const l_direction = state.lang === 'en' ? 'Direction Vector:' : 'شعاع الحركة والاتجاه:';
     const l_est_radius = state.lang === 'en' ? 'Est. Search Radius:' : 'نطاق البحث التقديري:';
-
     const l_dispatch = state.lang === 'en' ? 'Operations Dispatch Control' : 'غرفة التوجيه وتوزيع فرق الإنقاذ';
     const l_nearest = state.lang === 'en' ? 'Nearest Rescue Base:' : 'أقرب مركز إنقاذ:';
     const l_dispatch_btn = state.lang === 'en' ? 'DISPATCH TEAM HELI' : 'توجيه فرقة الإنقاذ الجوي';
-
     detailPanel.innerHTML = `
         <div class="ops-profile-header">
             <div class="top-meta">
@@ -1569,7 +1411,6 @@ function renderIncidentDetails() {
             </div>
             <h3>${l_case}</h3>
         </div>
-
         <div class="ops-grid">
             <!-- 1. Patient Profile -->
             <div class="ops-block">
@@ -1582,7 +1423,6 @@ function renderIncidentDetails() {
                     <div><span>${l_vehicle}</span> <strong>${inc.vehicleInfo}</strong></div>
                 </div>
             </div>
-
             <!-- 2. AI Priority Widget -->
             <div class="ops-block">
                 <div class="ops-block-title">${l_ai_score}</div>
@@ -1596,7 +1436,6 @@ function renderIncidentDetails() {
                     </div>
                 </div>
             </div>
-
             <!-- 3. Telemetry Predictions Search area -->
             <div class="ops-block">
                 <div class="ops-block-title">${l_telemetry}</div>
@@ -1611,7 +1450,6 @@ function renderIncidentDetails() {
                     </div>
                 </div>
             </div>
-
             <!-- 4. Dispatch Operations -->
             <div class="ops-block">
                 <div class="ops-block-title">${l_dispatch}</div>
@@ -1649,13 +1487,11 @@ function renderIncidentDetails() {
                     </div>
                 `}
             </div>
-
             <!-- 5. Case Notes -->
             <div class="ops-block">
                 <div class="ops-block-title">${l_notes}</div>
                 <p style="font-size:12px; line-height:1.4; color:var(--ops-text-secondary);">${inc.notes}</p>
             </div>
-
             <!-- 6. Operational Log Timeline -->
             <div class="ops-block">
                 <div class="ops-block-title">${state.lang === 'en' ? 'Operational Incident Timeline' : 'سجل حركة البلاغ والإنقاذ'}</div>
@@ -1666,11 +1502,9 @@ function renderIncidentDetails() {
         </div>
     `;
 }
-
 function dispatchTeam(caseId, teamName) {
     const officerSelect = document.getElementById('dispatch-officer');
     const officerName = officerSelect.value;
-
     if (!officerName) {
         showToast(
             state.lang === 'en' ? "Please assign a field commander before dispatching" 
@@ -1679,7 +1513,6 @@ function dispatchTeam(caseId, teamName) {
         );
         return;
     }
-
     const inc = state.incidents.find(i => i.id === caseId);
     if (inc) {
         inc.status = "DISPATCHED";
@@ -1693,19 +1526,16 @@ function dispatchTeam(caseId, teamName) {
             event_en: `Rescue squad ${teamName} dispatched under Capt. ${officerName.replace(/^(Capt\.|Lt\.|Maj\.)\s*/, '')}.`,
             event_ar: `انطلاق فرقة إنقاذ ${teamName} تحت قيادة القائد الميداني ${officerName}.`
         });
-
         showToast(
             state.lang === 'en' ? `Rescue team dispatched. ETA ${inc.eta}` 
                                : `تم إطلاق فرقة الإنقاذ الميدانية. الوصول التقديري خلال ${inc.eta}`,
             "success"
         );
-
         renderIncidentsList();
         renderIncidentDetails();
         updateMapMarkers(); // draw route / targets
     }
 }
-
 function updateCaseStatus(caseId, newStatus) {
     const inc = state.incidents.find(i => i.id === caseId);
     if (inc) {
@@ -1744,7 +1574,6 @@ function updateCaseStatus(caseId, newStatus) {
             logEn = "Case closed by Command Center control.";
             logAr = "تم إغلاق ملف البلاغ بالكامل بقرار من غرفة العمليات.";
         }
-
         inc.timeline.push({ time: timestamp, event_en: logEn, event_ar: logAr });
         
         showToast(
@@ -1757,42 +1586,34 @@ function updateCaseStatus(caseId, newStatus) {
         renderIncidentDetails();
     }
 }
-
 // ==========================================================================
 // 14. INTERACTIVE MAP ENGINE (LEAFLET.JS CDNs)
 // ==========================================================================
 function initRescueMap() {
     if (mapInstance) return; // Map already loaded
-
     // Initialize Leaflet Map centering Riyadh, Saudi Arabia
     mapInstance = L.map('rescue-map', {
         zoomControl: true,
         attributionControl: false
     }).setView([24.7136, 46.6753], 6);
-
     // Apply CartoDB Dark Matter tile layers to look premium/futuristic command center
     L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
         maxZoom: 19
     }).addTo(mapInstance);
-
     // Setup map groups to overlay layers clean
     mapMarkersGroup = L.layerGroup().addTo(mapInstance);
     predictiveCirclesGroup = L.layerGroup().addTo(mapInstance);
 }
-
 function updateMapMarkers() {
     if (!mapInstance || !mapMarkersGroup) return;
-
     // Clear previous markers
     mapMarkersGroup.clearLayers();
-
     state.incidents.forEach(inc => {
         // Decide color based on priority
         let color = '#10b981'; // low green
         if (inc.priorityScore >= 75) color = '#ef4444'; // critical red
         else if (inc.priorityScore >= 50) color = '#f97316'; // orange high
         else if (inc.priorityScore >= 30) color = '#eab308'; // yellow medium
-
         // Custom circle div icon representation
         const customIcon = L.divIcon({
             html: `<div style="background-color:${color}; width: 14px; height: 14px; border-radius:50%; border: 2.5px solid #fff; box-shadow: 0 0 10px ${color};"></div>`,
@@ -1800,7 +1621,6 @@ function updateMapMarkers() {
             iconSize: [14, 14],
             iconAnchor: [7, 7]
         });
-
         const marker = L.marker([inc.lastLocation.lat, inc.lastLocation.lng], { icon: customIcon })
             .bindTooltip(`<b>CASE #${inc.id}</b><br>${inc.name}<br>${inc.emergencyType}`, { direction: 'top' })
             .on('click', () => {
@@ -1810,23 +1630,19 @@ function updateMapMarkers() {
         mapMarkersGroup.addLayer(marker);
     });
 }
-
 function focusMapOnIncident(id) {
     if (!mapInstance) return;
     
     const inc = state.incidents.find(i => i.id === id);
     if (!inc) return;
-
     // Pan map to incident coordinates center
     mapInstance.setView([inc.lastLocation.lat, inc.lastLocation.lng], 9);
-
     // Remove previous predicted search shape layers
     predictiveCirclesGroup.clearLayers();
     if (searchVectorLine) {
         mapInstance.removeLayer(searchVectorLine);
         searchVectorLine = null;
     }
-
     // 1. Math calculation for Search Prediction vectors
     // elapsed time (hours)
     const elapsedHrs = (Date.now() - new Date(inc.lastUpdate).getTime()) / (60 * 60 * 1000);
@@ -1838,10 +1654,8 @@ function focusMapOnIncident(id) {
         const estDistKms = inc.speed * elapsedHrs;
         const latOffset = (estDistKms * Math.cos(inc.heading * Math.PI / 180)) / 111;
         const lngOffset = (estDistKms * Math.sin(inc.heading * Math.PI / 180)) / (111 * Math.cos(inc.lastLocation.lat * Math.PI / 180));
-
         const predictedCenterLat = inc.lastLocation.lat + latOffset;
         const predictedCenterLng = inc.lastLocation.lng + lngOffset;
-
         // Draw predicted search area rings relative to elapsed offline time
         // Radius in meters: coeff * speed * hours * 1000
         const baseRadiusMeters = inc.terrainCoefficient * inc.speed * elapsedHrs * 1000;
@@ -1850,7 +1664,6 @@ function focusMapOnIncident(id) {
         const r92 = baseRadiusMeters * 0.7; // core
         const r75 = baseRadiusMeters * 1.3; // expanded
         const r50 = baseRadiusMeters * 2.2; // outer limit
-
         // Draw circles centered on the PREDICTED OFFSET coordinate
         // 92% Core Area (Red)
         const circle92 = L.circle([predictedCenterLat, predictedCenterLng], {
@@ -1871,7 +1684,6 @@ function focusMapOnIncident(id) {
             fillColor: '#f97316',
             fillOpacity: 0.08
         });
-
         // 50% Outer Search Limit (Yellow)
         const circle50 = L.circle([predictedCenterLat, predictedCenterLng], {
             radius: r50,
@@ -1881,7 +1693,6 @@ function focusMapOnIncident(id) {
             fillColor: '#eab308',
             fillOpacity: 0.04
         });
-
         // Draw search direction vector line connecting last coordinates to predicted center
         searchVectorLine = L.polyline([
             [inc.lastLocation.lat, inc.lastLocation.lng],
@@ -1892,7 +1703,6 @@ function focusMapOnIncident(id) {
             dashArray: '8, 8',
             opacity: 0.85
         }).addTo(mapInstance);
-
         predictiveCirclesGroup.addLayer(circle92);
         predictiveCirclesGroup.addLayer(circle75);
         predictiveCirclesGroup.addLayer(circle50);
@@ -1920,14 +1730,12 @@ function focusMapOnIncident(id) {
             fillColor: '#eab308',
             fillOpacity: 0.04
         });
-
         predictiveCirclesGroup.addLayer(circle92);
         predictiveCirclesGroup.addLayer(circle50);
         
         mapInstance.fitBounds(circle50.getBounds());
     }
 }
-
 // ==========================================================================
 // 15. WINDOW INITIALIZATION LOADING BINDING
 // ==========================================================================
@@ -1954,7 +1762,6 @@ window.addEventListener('DOMContentLoaded', () => {
         if (btnLang) btnLang.textContent = 'العربية';
     }
     applyTranslations();
-
     // 3. Check for active login session
     const sessionUser = localStorage.getItem('madad_user');
     if (sessionUser) {
