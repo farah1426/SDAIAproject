@@ -1776,3 +1776,19 @@ window.addEventListener('DOMContentLoaded', () => {
         switchView('landing');
     }
 });
+function toggleTripPlateRequirement() {
+    const transport = document.getElementById('trip-transport');
+    const plateGroup = document.getElementById('trip-plate-group');
+    const plateInput = document.getElementById('trip-plate');
+
+    if (!transport || !plateGroup || !plateInput) return;
+
+    const needsPlate = transport.value === '4x4 SUV' || transport.value === 'Quad / ATV';
+
+    plateGroup.style.display = needsPlate ? 'block' : 'none';
+    plateInput.required = needsPlate;
+
+    if (!needsPlate) {
+        plateInput.value = '';
+    }
+}
