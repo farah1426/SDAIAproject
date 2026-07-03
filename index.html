@@ -20,9 +20,9 @@
     <!-- Top Admin & Demo Control Panel -->
     <div class="demo-controls">
         <div class="demo-logo">
-            <span class="badge-gold">DEMO MODE</span>
-            <span data-en="Madad مدد Control" data-ar="لوحة تحكم مدد">Madad مدد Control</span>
-        </div>
+<div class="top-logo-box">
+    <img src="0845F504-F852-4B06-AE7B-ACF3D83E67BD.png" class="top-logo-img" alt="شعار مدد">
+</div>        </div>
         <div class="demo-buttons">
             <!-- Guest Buttons -->
             <button onclick="switchView('landing'); toggleAuthTab('login');" class="btn-demo active" id="btn-nav-login" data-en="Login" data-ar="تسجيل الدخول">Login</button>
@@ -54,10 +54,6 @@
                 <div class="hero-content">
                     <div class="gov-crest">
                         <!-- Saudi Crest Mockup SVG -->
-                        <svg viewBox="0 0 100 100" class="crest-icon">
-                            <path d="M50 95 L52 80 L65 78 L53 60 L75 52 L60 48 L80 20 L50 40 L20 20 L40 48 L25 52 L47 60 L35 78 L48 80 Z" fill="#ffffff"/>
-                            <path d="M50 5 L50 95" stroke="#ffffff" stroke-width="2" stroke-dasharray="3,3"/>
-                        </svg>
                         <div class="gov-text">
                             <h2 data-en="Kingdom of Saudi Arabia" data-ar="المملكة العربية السعودية">Kingdom of Saudi Arabia</h2>
                             <h3 data-en="Saudi Smart Rescue Platform" data-ar="المنصة السعودية للإنقاذ الذكي">Saudi Smart Rescue Platform</h3>
@@ -79,7 +75,7 @@
             <div class="auth-section">
                 <!-- Tab Switching between Login & Register -->
                 <div class="auth-tabs">
-                    <button class="auth-tab active" id="tab-login" onclick="toggleAuthTab('login')" data-en="Nafath Single Sign-On" data-ar="النفاذ الوطني الموحد">Nafath Single Sign-On</button>
+<button class="auth-tab active" id="tab-login" onclick="toggleAuthTab('login')" data-en="Login" data-ar="تسجيل الدخول">تسجيل الدخول</button>
                     <button class="auth-tab" id="tab-register" onclick="toggleAuthTab('register')" data-en="New Registration" data-ar="تسجيل جديد">New Registration</button>
                 </div>
 
@@ -89,7 +85,7 @@
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
                             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
                         </svg>
-                        <span data-en="Log in securely using your National Single Sign-On credentials." data-ar="تسجيل الدخول الآمن باستخدام الهوية الوطنية الموحدة.">Log in securely using your National Single Sign-On credentials.</span>
+                        <span data-en="Log in securely using your National Single Sign-On credentials." data-ar="تسجيل الدخول الآمن باستخدام الهوية الوطنية الموحدة.">Log in securely using your ID or username.</span>
                     </div>
 
                     <form id="form-login" onsubmit="handleLogin(event)" novalidate>
@@ -107,14 +103,18 @@
                         <button type="submit" class="btn btn-primary btn-block">
                             <span data-en="Secure Login" data-ar="دخول آمن">Secure Login</span>
                         </button>
-                    </form>
-                    
+                                        </form>
+
                     <div class="auth-footer">
-                        <p data-en="Demo Accounts: Enter 'citizen' for User, 'officer' for Rescue Ops (any password)." data-ar="حسابات التجربة: أدخل 'citizen' للمستخدم، أو 'officer' لغرفة العمليات (أي كلمة مرور).">
-                            Demo Accounts: Enter 'citizen' for User, 'officer' for Rescue Ops (any password).
+                        <p data-en="Quick test login: type 'citizen' to open the user page, or 'officer' to open the rescue team page. Any password works."
+                           data-ar="للدخول السريع: اكتب 'citizen' لصفحة المستخدم، أو 'officer' لصفحة فريق الإنقاذ. أي كلمة مرور تعمل.">
+                            للدخول السريع: اكتبي 'citizen' لصفحة المستخدم، أو 'officer' لصفحة فريق الإنقاذ. أي كلمة مرور تعمل.
                         </p>
                     </div>
                 </div>
+
+                <!-- REGISTER FORM -->
+                    
 
                 <!-- REGISTER FORM -->
                 <div id="auth-register-box" class="auth-box">
@@ -208,7 +208,7 @@
             <!-- Header User Profile Area -->
             <header class="dashboard-header">
                 <div class="header-logo">
-                    <span class="crest-mini">🛡️</span>
+                    <span class="crest-mini"></span>
                     <div>
                         <h2 data-en="MADAD Portal" data-ar="بوابة مدد">MADAD Portal</h2>
                         <p data-en="National Smart Rescue Portal" data-ar="البوابة الوطنية للإنقاذ الذكي">National Smart Rescue Portal</p>
@@ -217,8 +217,7 @@
                 
                 <div class="user-meta">
                     <div class="profile-info">
-                        <span class="user-avatar">👤</span>
-                        <div class="text-right-aligned">
+<img class="user-avatar-img" src="0796F122-3FCB-4675-8A7C-754ACBC56B65.PNG" alt="صورة المستخدم">                        <div class="text-right-aligned">
                             <strong id="user-display-name">Fahad Ahmed</strong>
                             <span id="user-display-id" class="badge-national-id">ID: 1089274810</span>
                         </div>
@@ -232,7 +231,8 @@
                 <div class="dash-main-flow">
                     <!-- National Crest & Notice -->
                     <div class="national-banner">
-                        <div class="banner-crest">🇸🇦</div>
+    <img class="national-banner-img" src="3FC7CE6E-C8F0-4A7F-8AB5-8DBAC31101C7.PNG" alt="">
+    <div class="national-banner-overlay"></div>
                         <div class="banner-body">
                             <h3 data-en="Emergency Broadcast & Advisory" data-ar="البث الوطني والتنبيهات">Emergency Broadcast & Advisory</h3>
                             <p data-en="Active Weather Alert: High temperatures and strong wind warnings in Rub' al Khali & Nafud. Mountain climbers in Asir region should exercise high caution." data-ar="تنبيه جوي نشط: تحذيرات من ارتفاع درجات الحرارة والرياح النشطة في الربع الخالي والنفوذ. يرجى أخذ الحيطة لممارسي رياضة التسلق في عسير.">Active Weather Alert: High temperatures and strong wind warnings in Rub' al Khali & Nafud. Mountain climbers in Asir region should exercise high caution.</p>
@@ -243,8 +243,9 @@
                     <div class="services-grid">
                         <!-- Service Card 1 -->
                         <div class="service-card" onclick="openUserPanel('panel-safe-trip')">
-                            <div class="card-icon col-green">🗺️</div>
-                            <div class="card-content">
+<div class="card-icon col-green">
+<img class="card-icon-img trip-img" src="5DAB0E1D-E883-4BF6-8095-2091800276AA.PNG
+" alt="Start Safe Trip"></div>                            <div class="card-content">
                                 <h3 data-en="Start Safe Trip" data-ar="بدء رحلة آمنة">Start Safe Trip</h3>
                                 <p data-en="Register desert, flood-zone, or mountain trips. Logs your last active location." data-ar="سجل مسارك قبل دخول الصحراء أو الجبال. لنتمكن من تتبع آخر إحداثيات متصلة.">Register desert, flood-zone, or mountain trips. Logs your last active location.</p>
                             </div>
@@ -252,7 +253,10 @@
 
                         <!-- Service Card 2 -->
                         <div class="service-card alert-card" onclick="openUserPanel('panel-sos')">
-                            <div class="card-icon col-red">🚨</div>
+                           <div class="card-icon col-red">
+    <img src="78F65A26-AFB7-47D0-96E8-25C6CD393C25.PNG
+" alt="SOS">
+</div>
                             <div class="card-content">
                                 <h3 data-en="SOS Emergency" data-ar="نداء استغاثة طارئ">SOS Emergency</h3>
                                 <p data-en="Instant rescue broadcast. Transmit medical state and GPS coordinate." data-ar="إرسال طلب استغاثة فوري. بث البيانات الطبية والموقع الجغرافي لغرفة العمليات.">Instant rescue broadcast. Transmit medical state and GPS coordinate.</p>
@@ -261,35 +265,50 @@
 
                         <!-- Service Card 3 -->
                         <div class="service-card" onclick="openUserPanel('panel-missing')">
-                            <div class="card-icon col-blue">🔍</div>
-                            <div class="card-content">
+<div class="card-icon col-yellow">
+    <img src="926D946E-DF39-4648-BB7C-13762904BCEA.PNG" alt="الإبلاغ عن مفقود" class="custom-icon">
+</div>                            <div class="card-content">
                                 <h3 data-en="Report Missing Person" data-ar="الإبلاغ عن مفقود">Report Missing Person</h3>
                                 <p data-en="Search by ID to trigger emergency rescue with their last synced coordinates." data-ar="البحث برقم الهوية لإطلاق عملية إنقاذ بالاعتماد على آخر موقع مسجل له بالمنصة.">Search by ID to trigger emergency rescue with their last synced coordinates.</p>
                             </div>
                         </div>
 
                         <!-- Service Card 4 -->
-                        <div class="service-card" onclick="openUserPanel('panel-guide')">
-                            <div class="card-icon col-gold">📖</div>
-                            <div class="card-content">
-                                <h3 data-en="Bilingual Survival Guide" data-ar="دليل النجاة ثنائي اللغة">Bilingual Survival Guide</h3>
-                                <p data-en="Offline-first procedures for desert heat, flash floods, injuries, and mechanics." data-ar="إجراءات النجاة والإسعافات الأولية للصحراء والسيول وأعطال السيارات بدون إنترنت.">Offline-first procedures for desert heat, flash floods, injuries, and mechanics.</p>
-                            </div>
-                        </div>
+                        <!-- Service Card 4 -->
+<div class="service-card" onclick="openUserPanel('panel-guide')">
+    <div class="card-icon col-yellow">
+        <img src="5A855F84-463D-4566-9CC5-18E964257009.PNG
+" alt="دليل النجاة" class="custom-icon icon-smaller">
+    </div>
 
-                        <!-- Service Card 5 -->
-                        <div class="service-card" onclick="openUserPanel('panel-offline-maps')">
-                            <div class="card-icon col-teal">💾</div>
-                            <div class="card-content">
-                                <h3 data-en="Download Offline Maps" data-ar="تحميل الخرائط غير المتصلة">Download Offline Maps</h3>
-                                <p data-en="Cache Saudi topographic & rescue grids to your device memory." data-ar="حفظ خرائط التضاريس والإنقاذ بالمملكة مباشرة على ذاكرة جهازك.">Cache Saudi topographic & rescue grids to your device memory.</p>
-                            </div>
-                        </div>
+    <div class="card-content">
+        <h3 data-en="Bilingual Survival Guide" data-ar="دليل النجاة ثنائي اللغة">
+            Bilingual Survival Guide
+        </h3>
+
+        <p data-en="Offline-first procedures for desert heat, flash floods, injuries, and mechanics."
+           data-ar="إجراءات النجاة والإسعافات الأولية للصحراء والسيول وأعطال السيارات بدون إنترنت.">
+            Offline-first procedures for desert heat, flash floods, injuries, and mechanics.
+        </p>
+    </div>
+</div>
+
+                       <!-- Service Card 5 -->
+<div class="service-card" onclick="openUserPanel('panel-offline-maps')">
+    <div class="card-icon col-teal">
+        <img src="EAE1033B-1A1D-4E54-BA8C-73289E8CCF2A.PNG   " alt="خرائط غير متصلة" class="custom-icon">
+    </div>
+    <div class="card-content">
+        <h3 data-en="Download Offline Maps" data-ar="تحميل الخرائط غير المتصلة">Download Offline Maps</h3>
+        <p data-en="Cache Saudi topographic & rescue grids to your device memory." data-ar="حفظ خرائط التضاريس والإنقاذ بالمملكة مباشرة على ذاكرة جهازك.">Cache Saudi topographic & rescue grids to your device memory.</p>
+    </div>
+</div>
 
                         <!-- Service Card 6 -->
                         <div class="service-card" onclick="openUserPanel('panel-my-trips')">
-                            <div class="card-icon col-grey">🕒</div>
-                            <div class="card-content">
+<div class="card-icon col-grey">
+    <img src="000C9F63-518D-4F94-B6CB-7B487760F28C.PNG" alt="رحلاتي وبلاغاتي" class="custom-icon icon-smaller">
+</div>                            <div class="card-content">
                                 <h3 data-en="My Trips & Reports" data-ar="رحلاتي وبلاغاتي">My Trips & Reports</h3>
                                 <p data-en="Review past tracking logs, case numbers, and civil defense status." data-ar="استعراض الرحلات السابقة، أرقام الحالات، وحالة المعالجة لدى الدفاع المدني.">Review past tracking logs, case numbers, and civil defense status.</p>
                             </div>
@@ -312,7 +331,7 @@
                     <!-- PANEL: START SAFE TRIP -->
                     <div id="panel-safe-trip" class="user-panel">
                         <div class="panel-header">
-                            <h3 data-en="🗺️ Start Safe Trip" data-ar="🗺️ بدء رحلة آمنة">🗺️ Start Safe Trip</h3>
+                            <h3 data-en=" Start Safe Trip" data-ar=" بدء رحلة آمنة"> Start Safe Trip</h3>
                             <button onclick="closeUserPanel()" class="btn-close">&times;</button>
                         </div>
                         
@@ -330,12 +349,13 @@
                                 </div>
                                 <div class="form-group">
                                     <label data-en="Transport Method" data-ar="وسيلة التنقل">Transport Method</label>
-                                    <select id="trip-transport" required>
-                                        <option value="4x4 SUV" data-en="4x4 SUV" data-ar="مركبة دفع رباعي">4x4 SUV</option>
-                                        <option value="Camel / Animal" data-en="Camel / Animal" data-ar="جمال / ركوب">Camel / Animal</option>
-                                        <option value="Hiking / Walking" data-en="Hiking" data-ar="سيرًا على الأقدام">Hiking</option>
-                                        <option value="Quad / ATV" data-en="Quad Bike" data-ar="دراجة نارية برية">Quad Bike</option>
-                                    </select>
+<select id="trip-transport" required onchange="toggleTripPlateRequirement()">
+    <option value="" disabled selected data-en="Select transport method" data-ar="اختار وسيلة التنقل">Select transport method</option>
+    <option value="4x4 SUV" data-en="4x4 SUV" data-ar="مركبة دفع رباعي">4x4 SUV</option>
+    <option value="Camel / Animal" data-en="Camel / Animal" data-ar="جمال / ركوب">Camel / Animal</option>
+    <option value="Hiking / Walking" data-en="Hiking" data-ar="سيرًا على الأقدام">Hiking</option>
+    <option value="Quad / ATV" data-en="Quad Bike" data-ar="دباب / دراجة برية">Quad Bike</option>
+</select>                                        </select>
                                 </div>
                             </div>
                             
@@ -344,10 +364,10 @@
                                     <label data-en="Number of Companions" data-ar="عدد المرافقين">Number of Companions</label>
                                     <input type="number" id="trip-companions" min="0" value="0" required>
                                 </div>
-                                <div class="form-group">
-                                    <label data-en="Vehicle Plate (If SUV/ATV)" data-ar="لوحة المركبة (إن وجدت)">Vehicle Plate (If SUV/ATV)</label>
-                                    <input type="text" id="trip-plate" placeholder="أ ب ج 1234">
-                                </div>
+                                <div class="form-group" id="trip-plate-group" style="display: none;">
+    <label data-en="Vehicle Plate" data-ar="لوحة المركبة">Vehicle Plate</label>
+    <input type="text" id="trip-plate" placeholder="أ ب ج 1234">
+</div>
                             </div>
 
                             <div class="form-group">
@@ -411,20 +431,7 @@
                                 </div>
                             </div>
 
-                            <!-- Disconnection Simulation Trigger -->
-                            <div class="disconnect-trigger-box">
-                                <h4 data-en="🚨 Signal Loss Simulation" data-ar="🚨 محاكاة فقدان شبكة الإنترنت">🚨 Signal Loss Simulation</h4>
-                                <p data-en="Toggle this to simulate entering a dead zone without internet. Madad will STOP uploading GPS coordinates. Search operations will calculate search zones using the last uploaded coordinate." data-ar="فعل this الخيار لمكاحاة انقطاع الإنترنت. ستتوقف المنصة عن رفع الإحداثيات، وستعتمد غرفة العمليات على حسابات الفقد التنبؤية بناءً على آخر إحداثية تم رفعها.">
-                                    Toggle this to simulate entering a dead zone without internet. Madad will STOP uploading GPS coordinates.
-                                </p>
-                                <div class="toggle-container">
-                                    <label class="switch">
-                                        <input type="checkbox" id="btn-simulate-disconnect" onchange="toggleSignalLoss(this)">
-                                        <span class="slider round"></span>
-                                    </label>
-                                    <span id="signal-label" class="signal-label-text col-green" data-en="Connected (Online)" data-ar="متصل (أونلاين)">Connected (Online)</span>
-                                </div>
-                            </div>
+                           
 
                             <div class="hud-actions">
                                 <button onclick="triggerHudSOS()" class="btn btn-red btn-block" data-en="EMERGENCY SOS NOW" data-ar="إرسال استغاثة عاجلة">EMERGENCY SOS NOW</button>
@@ -436,7 +443,7 @@
                     <!-- PANEL: SOS EMERGENCY -->
                     <div id="panel-sos" class="user-panel">
                         <div class="panel-header">
-                            <h3 data-en="🚨 Emergency SOS Alert" data-ar="🚨 نداء استغاثة عاجل">🚨 Emergency SOS Alert</h3>
+                            <h3 data-en=" Emergency SOS Alert" data-ar=" نداء استغاثة عاجل"> Emergency SOS Alert</h3>
                             <button onclick="closeUserPanel()" class="btn-close">&times;</button>
                         </div>
                         
@@ -478,11 +485,11 @@
                                         <div class="step-label" data-en="Reported" data-ar="تم التبليغ">Reported</div>
                                     </div>
                                     <div class="step" id="step-dispatched">
-                                        <div class="step-icon">🚁</div>
+                                        <div class="step-icon"></div>
                                         <div class="step-label" data-en="Dispatched" data-ar="تم الانطلاق">Dispatched</div>
                                     </div>
                                     <div class="step" id="step-rescued">
-                                        <div class="step-icon">🤝</div>
+                                        <div class="step-icon"></div>
                                         <div class="step-label" data-en="Rescued" data-ar="تم الإنقاذ">Rescued</div>
                                     </div>
                                 </div>
@@ -496,7 +503,7 @@
                     <!-- PANEL: REPORT MISSING PERSON -->
                     <div id="panel-missing" class="user-panel">
                         <div class="panel-header">
-                            <h3 data-en="🔍 Report Missing Person" data-ar="🔍 الإبلاغ عن شخص مفقود">🔍 Report Missing Person</h3>
+                            <h3 data-en=" Report Missing Person" data-ar=" الإبلاغ عن شخص مفقود"> Report Missing Person</h3>
                             <button onclick="closeUserPanel()" class="btn-close">&times;</button>
                         </div>
                         
@@ -555,7 +562,7 @@
                     <!-- PANEL: BILINGUAL SURVIVAL GUIDE -->
                     <div id="panel-guide" class="user-panel">
                         <div class="panel-header">
-                            <h3 data-en="📖 Bilingual Survival Guide" data-ar="📖 دليل النجاة والعمليات البرية">📖 Bilingual Survival Guide</h3>
+                            <h3 data-en=" Bilingual Survival Guide" data-ar=" دليل النجاة والعمليات البرية"> Bilingual Survival Guide</h3>
                             <button onclick="closeUserPanel()" class="btn-close">&times;</button>
                         </div>
                         
@@ -612,7 +619,7 @@
                     <!-- PANEL: DOWNLOAD OFFLINE MAPS -->
                     <div id="panel-offline-maps" class="user-panel">
                         <div class="panel-header">
-                            <h3 data-en="💾 Download Offline Maps" data-ar="💾 تحميل الخرائط دون اتصال">💾 Download Offline Maps</h3>
+                            <h3 data-en=" Download Offline Maps" data-ar=" تحميل الخرائط دون اتصال"> Download Offline Maps</h3>
                             <button onclick="closeUserPanel()" class="btn-close">&times;</button>
                         </div>
                         <div class="panel-body text-center">
@@ -649,7 +656,7 @@
                     <!-- PANEL: MY TRIPS & REPORTS -->
                     <div id="panel-my-trips" class="user-panel">
                         <div class="panel-header">
-                            <h3 data-en="🕒 My Registered Trips & Reports" data-ar="🕒 رحلاتي وبلاغات الطوارئ السابقة">🕒 My Registered Trips & Reports</h3>
+                            <h3 data-en=" My Registered Trips & Reports" data-ar=" رحلاتي وبلاغات الطوارئ السابقة"> My Registered Trips & Reports</h3>
                             <button onclick="closeUserPanel()" class="btn-close">&times;</button>
                         </div>
                         <div class="panel-body">
@@ -690,10 +697,7 @@
                         <span data-en="RESCUED (TODAY)" data-ar="تم إنقاذهم اليوم">RESCUED (TODAY)</span>
                         <strong id="stat-rescued-today" class="col-green">8</strong>
                     </div>
-                    <div class="ops-stat">
-                        <span data-en="AVG DISPATCH ETA" data-ar="معدل وقت الوصول">AVG DISPATCH ETA</span>
-                        <strong id="stat-avg-eta" class="col-teal">32 Min</strong>
-                    </div>
+                    
                 </div>
             </header>
 
@@ -701,7 +705,7 @@
                 <!-- LEFT PANEL: Active Incidents List -->
                 <aside class="ops-sidebar-left">
                     <div class="sidebar-header">
-                        <h3 data-en="🚨 Live Incidents" data-ar="🚨 البلاغات النشطة">🚨 Live Incidents</h3>
+                        <h3 data-en=" Live Incidents" data-ar=" البلاغات النشطة"> Live Incidents</h3>
                         <!-- Filters -->
                         <div class="filter-controls">
                             <button class="btn-filter active" id="filter-all" onclick="filterIncidents('ALL')" data-en="All" data-ar="الكل">All</button>
@@ -743,7 +747,6 @@
                 <aside class="ops-sidebar-right" id="ops-incident-detail-panel">
                     <!-- Dynamic details injected here (Initial State is empty) -->
                     <div class="panel-empty-state dark-version">
-                        <div class="command-shield">🛡️</div>
                         <h4 data-en="No Case Selected" data-ar="لا توجد حالة محددة">No Case Selected</h4>
                         <p data-en="Click on an incident in the list or a map marker to open the detailed operations dashboard, dispatch teams, and view the AI priority scorecard." data-ar="اضغط على أحد البلاغات في القائمة أو علامة على الخريطة لفتح لوحة التحكم التفصيلية وتوجيه الفرق.">Select an incident to view details.</p>
                     </div>
